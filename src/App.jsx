@@ -1,49 +1,42 @@
 import { useEffect, useState } from 'react';
-import ContactForm from './components/ContactForm/ContactForm';
-import SearchBox from './components/SearchBox/SearchBox';
-import ContactList from './components/ContactList/ContactList';
-import ContactUsers from './contact.json';
-import { nanoid } from 'nanoid';
 
-function App() {
-  const [users, setUsers] = useState(() => {
-    const stringifiedUsers = localStorage.getItem('users');
-    if (!stringifiedUsers) return ContactUsers;
-    const parsedUsers = JSON.parse(stringifiedUsers);
-    return parsedUsers;
-  });
+import SearchBar from './components/SearchBar/SearchBar';
+import { requestPhotosByQuery } from './services/api';
+
+const App = () => {
+  const [photos, setPhoto] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+const[query, setQuery]=useState('')
+
 
   useEffect(() => {
-    localStorage.setItem('users', JSON.stringify(users));
-  }, [users]);
+    if (!query) return;
 
-  const onAddUser = formData => {
-    const finalUser = {
-      ...formData,
-      id: nanoid(),
-    };
-    setUsers(prevState => [...prevState, finalUser]);
-  };
-  const onDeleteUser = userId => {
-    setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
-  };
-  const [filter, setFilter] = useState('');
+    async function fetchPhotosByQuery() {
+      try {
+        setIsLoading(true);
+        const data = await requestPhotosByQuery(query);
+        setPhoto(data.products);
+      } catch (error) {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-  const onChangeFilter = event => {
-    setFilter(event.target.value);
-  };
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(filter.toLowerCase()),
-  );
+    fetchPhotosByQuery();
+  }, [query]);
+
+  // const onSetSearchQuery = (searchTerm) => {
+  //   setQuery(searchTerm);
+  // };
 
   return (
     <div>
-      <h1>Phonebook</h1>
-      <ContactForm onAddUser={onAddUser} />
-      <SearchBox onChangeFilter={onChangeFilter} filter={filter} />
-      <ContactList users={filteredUsers} onDeleteUser={onDeleteUser} />
+      <SearchBar />
     </div>
   );
-}
+};
 
 export default App;
