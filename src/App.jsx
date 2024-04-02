@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 
 import SearchBar from './components/SearchBar/SearchBar';
 import { requestPhotosByQuery } from './services/api';
-
+import Loader from './components/Loader/Loader';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import ImageGallery from './components/ImageGallery/ImageGallery'
 const App = () => {
-  const [photos, setPhoto] = useState(null);
+  const [results, setPhoto] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-const[query, setQuery]=useState('')
+  const[query, setQuery]=useState('')
 
 
   useEffect(() => {
@@ -17,7 +19,8 @@ const[query, setQuery]=useState('')
       try {
         setIsLoading(true);
         const data = await requestPhotosByQuery(query);
-        setPhoto(data.products);
+        setPhoto(data.results);
+        
       } catch (error) {
         setIsError(true);
       } finally {
@@ -28,13 +31,16 @@ const[query, setQuery]=useState('')
     fetchPhotosByQuery();
   }, [query]);
 
-  // const onSetSearchQuery = (searchTerm) => {
-  //   setQuery(searchTerm);
-  // };
+  const onSubmit = (searchTerm) => {
+    setQuery(searchTerm);
+  };
 
   return (
     <div>
-      <SearchBar />
+      <SearchBar onSubmit={onSubmit}/>
+      {isLoading&&<Loader/>}
+      {isError&&<ErrorMessage/>}
+      {results&&<ImageGallery results={results}/>}
     </div>
   );
 };
