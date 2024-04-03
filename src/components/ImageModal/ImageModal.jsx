@@ -1,4 +1,6 @@
-function ImageModal() {
+import React from 'react'
+
+const ImageModal = () => {
   return (
     <div>ImageModal</div>
   )
