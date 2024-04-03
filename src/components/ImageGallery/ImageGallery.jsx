@@ -1,10 +1,12 @@
+import css from './ImageGallery.module.css'
+
 const  ImageGallery=({results}) =>{
   return (
-    <ul>
+    <ul className={css.gallery}>
       {Array.isArray(results) &&
         results.map((result) => {
           return (
-          <li key={result.id}>
+          <li key={result.id} className={css.galleryItem}>
             <div>
               <img src={result.urls.small} alt={result.alt_description
 } />

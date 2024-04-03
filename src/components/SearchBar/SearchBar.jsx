@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
-
+import { useState } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
+import css from './SearchBar.module.css'
 const SearchBar = ({ onSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     if (searchTerm.trim() === '') {
-      // Показати повідомлення про порожній пошуковий термін
       toast.error('Please enter a search term');
-      return; // Вийти з функції, якщо термін порожній
+      return; 
     }
     onSubmit(searchTerm);
   };
@@ -20,7 +20,7 @@ const SearchBar = ({ onSubmit }) => {
 
   return (
     <header>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={css.SearchBar}>
         <input
           type="text"
           autoComplete="off"
@@ -31,6 +31,7 @@ const SearchBar = ({ onSubmit }) => {
         />
         <button type="submit">Search</button>
       </form>
+      <Toaster position="top-left" aria-label="Search"/>
     </header>
   );
 };

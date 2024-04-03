@@ -5,6 +5,7 @@ import { requestPhotosByQuery } from './services/api';
 import Loader from './components/Loader/Loader';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import ImageGallery from './components/ImageGallery/ImageGallery'
+import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
 const App = () => {
   const [results, setPhoto] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +42,7 @@ const App = () => {
       {isLoading&&<Loader/>}
       {isError&&<ErrorMessage/>}
       {results&&<ImageGallery results={results}/>}
+      {results&&<LoadMoreBtn onSubmit={onSubmit}/>}
     </div>
   );
 };

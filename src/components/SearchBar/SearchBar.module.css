@@ -1,0 +1,7 @@
+.SearchBar{
+    margin-top: 36px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    justify-content: center;
+}
