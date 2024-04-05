@@ -6,13 +6,16 @@ import Loader from './components/Loader/Loader';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import ImageGallery from './components/ImageGallery/ImageGallery'
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
+import ImageModal from './components/ImageModal/ImageModal';
+
+
 const App = () => {
-  const [results, setPhoto] = useState(null);
+  const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const[query, setQuery]=useState('');
   const[page, setPage]=useState(1)
-
+  const [resultsHasMore, setResultsHasMore] = useState(false);
 
   useEffect(() => {
     if (!query) return;
@@ -21,7 +24,14 @@ const App = () => {
       try {
         setIsLoading(true);
         const data = await requestPhotosByQuery(query,page);
-        setPhoto(data.results);
+        if (data.results.length === 0 ) {
+          setResultsHasMore(false); 
+        } else {
+        if (page === 1) {
+        setResults(data.results);
+      } else {
+        setResults(prevResults => [...prevResults, ...data.results]);
+      }}
       } catch (error) {
         setIsError(true);
       } finally {
@@ -34,18 +44,23 @@ const App = () => {
 
   const onSubmit = (searchTerm) => {
     setQuery(searchTerm);
+    setPage(1);
+    setResultsHasMore(true)
   };
-const onLoadMore = (page) =>{
-  setPage(page +1)
-}
+  const handleLoadMore = () => {
+    setPage(prevPage => prevPage + 1);
+  };
+  
+  console.log('prevPage: ', page);
 
   return (
     <div>
       <SearchBar onSubmit={onSubmit}/>
-      {isLoading&&<Loader/>}
       {isError&&<ErrorMessage/>}
       {results&&<ImageGallery results={results}/>}
-      {results&&<LoadMoreBtn onSubmit={onSubmit} onLoadMore={onLoadMore}/>}
+      {isLoading&&<Loader/>}
+      {results&&resultsHasMore && <LoadMoreBtn onClick={handleLoadMore}/>}
+      <ImageModal/>
     </div>
   );
 };

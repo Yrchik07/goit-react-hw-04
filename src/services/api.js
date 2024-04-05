@@ -9,7 +9,7 @@ const requestPhotosByQuery = async (query, page) => {
       params: {
         query: query,
         page: page,
-        per_page: 10, // Например, можно указать количество изображений на странице
+        per_page: 10, 
       },
       headers: {
         Authorization: `Client-ID ${ACCESS_KEY}`,
@@ -24,22 +24,3 @@ const requestPhotosByQuery = async (query, page) => {
 };
 
 export { requestPhotosByQuery };
-
-
-
-
-// import axios from "axios";
-
-// const instance = axios.create({
-//   baseURL: "https://api.unsplash.com",
-  
-// });
-// export const requestPhotosByQuery = async (query = "", page= 1 ) => {
-//   const params = new URLSearchParams({
-//   client_id: 'vmpj73WjzxomTLySKIx4P3K6GH4i7_4rkUcVcC9a4NU'
-// });
-//   const { data } = await instance.get(`/search/photos?page=${page}&query=${query}&${params}`);
-
-//   return data;
-// };
-//
