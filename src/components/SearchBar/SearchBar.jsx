@@ -19,9 +19,13 @@ const SearchBar = ({ onSubmit }) => {
   };
 
   return (
-    <header>
-      <form onSubmit={handleSubmit} className={css.SearchBar}>
-        <input
+    <header className={css.header}>
+
+      <form onSubmit={handleSubmit} className={css.form}>
+      <button className={css.submitBtn} type="submit"aria-label="Search">🔍</button>
+
+        <input className={css.field}
+        
           type="text"
           autoComplete="off"
           autoFocus
@@ -29,9 +33,8 @@ const SearchBar = ({ onSubmit }) => {
           value={searchTerm}
           onChange={handleChange}
         />
-        <button type="submit">Search</button>
       </form>
-      <Toaster position="top-left" aria-label="Search"/>
+      <Toaster position="top-left" aria-label="Search" />
     </header>
   );
 };

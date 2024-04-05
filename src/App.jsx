@@ -6,10 +6,8 @@ import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import ImageGallery from './components/ImageGallery/ImageGallery'
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
 import ImageModal from './components/ImageModal/ImageModal';
-import Modal from 'react-modal';
-import "./App.css";
 
-Modal.setAppElement('#root');
+
 const App = () => {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

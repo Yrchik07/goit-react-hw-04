@@ -5,18 +5,12 @@ ul {
   }
 
 .gallery{
-    margin-top: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+      display: flex;
+    width: 100%;
+    padding-top: 24px;
     flex-wrap: wrap;
-    gap: 24px;
-  }
-  .galleryItem{
-    width: 360px;
-    border: 1px solid #808080;
-  }
-  img{
-    height: 200px;
-    width: 360px;
-  }
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+}
+  

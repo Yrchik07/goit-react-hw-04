@@ -3,7 +3,8 @@ import css from "./ImageModal.module.css";
 
 const ImageModal = ({ isOpen, onRequestClose, selectedImage }) => {
   return (
-    <Modal
+   
+     <Modal
       className={css.modal}
       isOpen={isOpen}
       onRequestClose={onRequestClose}
@@ -11,6 +12,7 @@ const ImageModal = ({ isOpen, onRequestClose, selectedImage }) => {
     >
       <img src={selectedImage} alt="Selected" />
     </Modal>
+   
   );
 };
 

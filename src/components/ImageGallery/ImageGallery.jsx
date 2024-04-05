@@ -3,7 +3,8 @@ import css from './ImageGallery.module.css'
 
 const  ImageGallery=({results,openModal}) =>{
   return (
-    <ul className={css.gallery}>
+   
+      <ul className={css.gallery}>
       {Array.isArray(results) &&
         results.map(({id, urls, description}) => {
           return (
@@ -15,6 +16,7 @@ const  ImageGallery=({results,openModal}) =>{
           )
         })}
         </ul> 
+   
   );
 }
 
